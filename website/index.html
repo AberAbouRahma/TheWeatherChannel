@@ -1,0 +1,29 @@
+<!--
+Project: Weather Journal
+index.HTML by Aber Abou-Rahma(AA)
+11/17/2020
+
+-->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./app.js"></script>
+</head>
+<body>
+    <div id="app" style="background-color: lightblue;">
+        <center><h2>The Weather Journal Application</h2></center>
+        <hr>
+        <input type="text" id="zip" placeholder="enter zip code here"><br><br>
+        <textarea id="feelings" cols="30" rows="7" placeholder="enter how it feels like here"></textarea><br><br>
+        <button  id="generate" style="background-color:green;"><b>Get Data</b></button>&nbsp;&nbsp;&nbsp; 
+        <button id="reset" style="background-color:yellow;"><b></b>Reset Input</b></button>
+        <div id="entryHolder">
+            <div id="date"></div>
+            <div id="temp"></div>
+            <div id="content"></div>
+        </div>
+    </div>
+</body>
+</html>
