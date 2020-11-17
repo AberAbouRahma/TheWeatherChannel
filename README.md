@@ -22,7 +22,7 @@ after catching related OpenWeatherMap.org API errors.
 
 Note that: I did not upload the node_modules to the repository which includes all the project dependencies
 
-Challenges: Monor challenge. That is minor error, when using res.json()
+Challenges: Minor challenge. That is minor error, when using res.json()
         did not affect the functionality except for alarming-annoying error console log message
         "error SyntaxError: Unexpected token O in JSON at position 0"
         used res.text() instead of res.json() and the error is gone until further research in progress
