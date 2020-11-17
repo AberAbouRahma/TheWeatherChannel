@@ -1,5 +1,5 @@
 # TheWeatherChannel
-The Weather Channel Project of the Web Development Professional Nanodegree Program
+The Weather Channel Project of the Web Development Professional Nanodegree Program.
 This projects uses node.js, express, body-barser, and cors.
 It demonstrates the asynchronous java script programming concepts and utilizes 
 promises, chaining as it fetches the target API for the OpenWeatherMap.org
