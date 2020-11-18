@@ -3,6 +3,11 @@ Project: Weather Journal
 server.js by Aber Abou-Rahma(AA)
 11/17/2020
 
+Reviewed on 11/18/2018 per project review's comments as following:
+1) Declared the server variable using const rather than let
+2) Deleted unnecessary console log statement in app.get route function.
+3) In app.post function replaced res.sendStatus(200); with res.send({msg:"Post received"}); instead
+
 */ 
 
 /* Empty JS object to act as endpoint for all routes */
@@ -27,15 +32,14 @@ app.use(cors());
 /* Initializing the main project folder */
 app.use(express.static('./website'));
 
-const port = 3000;
+const port = 4000;
 
-var server = app.listen(port,  ()=>    console.log (`server started at port number : ${port}`));
+const server = app.listen(port,  ()=>    console.log (`server started at port number : ${port}`));
 
 
 // AA: Get route on the server setup 
 app.get('/getWeatherData', (req, res) => {
     res.send(projectData);
-    console.log(res.body);
 });
 
 // AA: Post route on the server setup
@@ -47,8 +51,7 @@ function add (req, res){
     console.log("Temperature = " + projectData.temperature);
     console.log("Date = " + projectData.date);
     console.log("User Response = " + projectData["user response"]);
-    
-   res.sendStatus(200);
+    res.send({msg:"Post received"});
  }
 
 

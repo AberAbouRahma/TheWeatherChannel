@@ -4,12 +4,21 @@ Project: Weather Journal
 app.js by Aber Abou-Rahma(AA)
 11/17/2020
 
+Reviewed on 11/18/2018 per project review's comments as following:
+1) Declared the baseURL, and apiKey variables using const rather than let
+2) Added the token &units=imperial to the end of the apiKey to request the unit conversion
+to Fahrenheit.
+3) Used res.json() rather than res.text()
+4) Defined UpdateUI() function to request all data (projectData Object) from the server to append data to DOM and display on the UI dynamically.
+5) In updateUI() added the temperature unit "Fahrenheit" to display to user.
+6) In updateUI(), modified the code to display only the day part of the date
+${allData.date.split(" ")[0]} in the DOM
 */ 
 
 // AA: baseURL to query by zip code
-let baseURL = 'http://api.openweathermap.org/data/2.5/forecast?zip=';
+const baseURL = 'http://api.openweathermap.org/data/2.5/forecast?zip=';
 // AA: API Key for the weather channel API account
-let apiKey = '&appid=4cf6e168caa8211224931c70f411defa';
+const apiKey = '&appid=84284a6461af20a4be33d90f4185528a&units=imperial';
 // AA: Missing input flag for robust input. I.e., to force the user enter zip code and weather feelings
 // case he/she forgot either input
 let inputEntered = false;
@@ -30,11 +39,7 @@ const postData = async ( url = '', data = {})=>{
     });
 
       try {
-        // Encountered minor error, when using res.json()
-        // did not affect the functionality but annoying error consol log message
-        // "error SyntaxError: Unexpected token O in JSON at position 0"
-        // used res.text instead untill further research
-        const newData = await res.text();
+        const newData = await res.json();
         console.log(newData);
         return newData;
       }catch(error) {
@@ -72,16 +77,27 @@ function performAction(event)
   .then(function(data){
     console.log(data);
     // AA: Add the data to post request to the server
-    postData('/addWeatherData', {temperature:data.list[0].main.temp,date:data.list[0].dt_txt ,'user response':feelingsData});
-
-    // AA: Append data to DOM dynamically
-    document.getElementById ('date').innerHTML = `<b style="color:blue;">Date:</b> ${data.list[0].dt_txt}`;
-    document.getElementById ('temp').innerHTML = `<b style="color:blue;">Temperature:</b> ${data.list[0].main.temp}`;
-    document.getElementById ('content').innerHTML = `<b style="color:blue;">Feelings:</b> ${feelingsData}`;
+    postData('/addWeatherData', {temperature:data.list[0].main.temp,date:data.list[0].dt_txt ,'user response':feelingsData})
+    // AA: Get All the data from the server to update the DOM and the UI
+    .then(updateUI());
   });
 };
 
-//
+// AA: Request all data (projectData Object) from the server to display in the UI,
+// then append data to DOM dynamically
+const updateUI = async () => {
+  const request = await fetch('/getWeatherData');
+  try{
+    const allData = await request.json();
+    document.getElementById ('date').innerHTML = `<b style="color:blue;">Date:</b> ${allData.date.split(" ")[0]}`;
+    document.getElementById ('temp').innerHTML = `<b style="color:blue;">Temperature:</b> ${allData.temperature} Fahrenheit`;
+    document.getElementById ('content').innerHTML = `<b style="color:blue;">Feelings:</b> ${allData["user response"]}`;
+
+  }catch(error){
+    console.log("error", error);
+  }
+}
+// AA: Getting the weather data from the UI
 const getWeatherData = async (baseURL, zipCode, key)=>{
 
   const res = await fetch(baseURL+zipCode+key)
